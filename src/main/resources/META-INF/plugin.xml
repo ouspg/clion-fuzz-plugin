@@ -1,0 +1,27 @@
+<idea-plugin>
+    <id>org.ouspg.jetbrains.fuzz-testing-plugin</id>
+    <name>FuzzTesting</name>
+    <vendor email="ouspg@ee.oulu.fi" url="https://www.oulu.fi/bisg/ouspg">OUSPG</vendor>
+
+    <!-- TODO add proper description and stuff -->
+    <description><![CDATA[
+    The plugin enables to add Fuzz testing and debugging features, to the development cycle of C/C++ programs<br>
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.cidr.lang</depends>
+    <depends>com.intellij.modules.cidr.debugger</depends>
+    <depends>com.intellij.modules.clion</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="TasksWindowFactory" anchor="left" factoryClass="windows.TasksWindowFactory">
+
+        </toolWindow>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>
