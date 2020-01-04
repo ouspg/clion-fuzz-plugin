@@ -15,10 +15,25 @@
     <depends>com.intellij.modules.cidr.debugger</depends>
     <depends>com.intellij.modules.clion</depends>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="TasksWindowFactory" anchor="left" factoryClass="windows.TasksWindowFactory">
+    <depends>org.jetbrains.plugins.terminal</depends>
 
-        </toolWindow>
+    <extensions defaultExtensionNs="com.intellij">
+        <configurationType implementation="config.FuzzerRunConfigurationType"/>
+        <toolWindow id="Fuzzer Console" factoryClass="windows.FuzzerConsoleToolWindowFactory" anchor="bottom" secondary="false" />
+        <projectService serviceImplementation="settings.PluginSettingsConfig"/>
+        <projectService serviceImplementation="settings.BuildSettingsConfig"/>
+        <projectService serviceImplementation="settings.AflSettingsConfig"/>
+        <projectService serviceImplementation="settings.CoverageSettingsConfig"/>
+
+        <projectConfigurable groupId="tools" groupWeight="110" id="settings.dialog.fuzzer.plugin"
+                             instance="settings.PluginSettingsConfigurable"/>
+        <projectConfigurable groupId="settings.dialog.fuzzer.plugin" groupWeight="110" id="settings.dialog.fuzzer.build"
+                             instance="settings.BuildSettingsConfigurable"/>
+
+        <projectConfigurable groupId="settings.dialog.fuzzer.plugin" groupWeight="110" id="settings.dialog.fuzzer.coverage"
+                             instance="settings.AflSettingsConfigurable"/>
+        <projectConfigurable groupId="settings.dialog.fuzzer.plugin" groupWeight="110" id="settings.dialog.fuzzer.fuzzer"
+                             instance="settings.CoverageSettingsConfigurable"/>
     </extensions>
 
     <actions>
