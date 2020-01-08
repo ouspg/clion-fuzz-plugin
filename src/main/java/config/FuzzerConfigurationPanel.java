@@ -1,23 +1,24 @@
 package config;
 
-import com.intellij.execution.impl.ConfigurationSettingsEditor;
-import com.jetbrains.cidr.cpp.cmake.model.CMakeConfiguration;
-import com.jetbrains.cidr.cpp.cmake.model.CMakeModelConfigurationData;
-import com.jetbrains.cidr.cpp.execution.CMakeAppRunConfigurationSettingsEditor;
-import settings.CMakeConfigurationSetup;
+import com.intellij.execution.configurations.RunConfiguration;
+import com.intellij.execution.configurations.RunConfigurationBase;
+import com.intellij.openapi.project.Project;
 
 import javax.swing.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.util.Set;
 
-public class FuzzerConfigurationPanel extends JPanel {
+public class FuzzerConfigurationPanel extends JPanel{
     private JPanel rootPanel;
     private JTabbedPane tabbedPane;
 
     public FuzzerConfigurationPanel(){
-        tabbedPane.setComponentAt(0, new FuzzerConfigurationTabComponent().getRootPanel());
+
+        tabbedPane.setComponentAt(0, new BuildConfigurationTabComponent().getRootPanel());
+        //tabbedPane.add("Build", new BuildConfigurationTabComponent().getRootPanel());
+       // tabbedPane.add("Code Coverage", new CodeCoverageTabComponent().getRootPanel());
     }
     public JPanel getRootPanel(){
         return rootPanel;
     }
+
 }

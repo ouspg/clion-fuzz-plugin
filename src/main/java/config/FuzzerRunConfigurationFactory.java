@@ -4,6 +4,7 @@ import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.configurations.ConfigurationType;
 import com.intellij.execution.configurations.RunConfiguration;
 import com.intellij.openapi.project.Project;
+import fuzzer.AflFuzzer;
 import org.jetbrains.annotations.NotNull;
 
 public class FuzzerRunConfigurationFactory extends ConfigurationFactory {
@@ -15,7 +16,7 @@ public class FuzzerRunConfigurationFactory extends ConfigurationFactory {
 
     @Override
     public @NotNull RunConfiguration createTemplateConfiguration(@NotNull Project project) {
-        return new FuzzerRunConfiguration(project, this, "FirstTestConfig");
+        return new AflFuzzerRunConfiguration<AflFuzzer.AflFuzzerRunConfigurationState>(project, this, "FirstTestConfig");
     }
 
     @NotNull
@@ -24,3 +25,4 @@ public class FuzzerRunConfigurationFactory extends ConfigurationFactory {
         return "Fuzzer Run/Debug configuration factory";
     }
 }
+
