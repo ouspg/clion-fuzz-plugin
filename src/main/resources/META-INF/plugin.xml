@@ -20,6 +20,8 @@
     <extensions defaultExtensionNs="com.intellij">
         <configurationType implementation="config.FuzzerRunConfigurationType"/>
         <toolWindow id="Fuzzer Console" factoryClass="windows.FuzzerConsoleToolWindowFactory" anchor="bottom" secondary="false" />
+        <toolWindow id="Crashes" factoryClass="windows.CrashesToolWindowFactory" anchor="right" secondary="false" />
+
         <projectService serviceImplementation="settings.PluginSettingsConfig"/>
         <projectService serviceImplementation="settings.BuildSettingsConfig"/>
         <projectService serviceImplementation="settings.AflSettingsConfig"/>
@@ -35,7 +37,6 @@
         <projectConfigurable groupId="settings.dialog.fuzzer.plugin" groupWeight="110" id="settings.dialog.fuzzer.fuzzer"
                              instance="settings.CoverageSettingsConfigurable"/>
     </extensions>
-
     <actions>
         <!-- Add your actions here -->
     </actions>

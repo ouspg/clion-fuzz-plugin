@@ -16,7 +16,7 @@ public class FuzzerRunConfigurationFactory extends ConfigurationFactory {
 
     @Override
     public @NotNull RunConfiguration createTemplateConfiguration(@NotNull Project project) {
-        return new AflFuzzerRunConfiguration<AflFuzzer.AflFuzzerRunConfigurationState>(project, this, "FirstTestConfig");
+        return new FuzzerRunConfiguration(project, this, "FirstTestConfig");
     }
 
     @NotNull

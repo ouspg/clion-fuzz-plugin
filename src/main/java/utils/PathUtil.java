@@ -156,7 +156,7 @@ public class PathUtil {
         return commandLine;
     }
 
-    protected GeneralCommandLine createDefaultTtyCommandLine() {
+    public static GeneralCommandLine createDefaultTtyCommandLine() {
         // here just run one command: python freeline.py
         PtyCommandLine commandLine = new PtyCommandLine();
         if (!SystemInfo.isWindows) {
@@ -166,7 +166,7 @@ public class PathUtil {
 //        commandLine.withInitialColumns(120);
 //        ExecutionEnvironment environment = getEnvironment();
 //        commandLine.setWorkDirectory(environment.getProject().getBasePath());
-        String defaultShell = ObjectUtils.notNull(EnvironmentUtil.getValue("SHELL"), "/bin/sh");
+        String defaultShell = ObjectUtils.notNull(EnvironmentUtil.getValue("BASH"), "/bin/bash");
         commandLine.setExePath(defaultShell);
 //            commandLine.setExePath("npm");
 //            commandLine.addParameters("run-script");

@@ -13,9 +13,9 @@ public class FuzzerConfigurationPanel extends JPanel{
 
     public FuzzerConfigurationPanel(){
 
-        tabbedPane.setComponentAt(0, new BuildConfigurationTabComponent().getRootPanel());
-        //tabbedPane.add("Build", new BuildConfigurationTabComponent().getRootPanel());
-       // tabbedPane.add("Code Coverage", new CodeCoverageTabComponent().getRootPanel());
+        tabbedPane.setComponentAt(0, new FuzzerConfigurationTabComponent().getRootPanel());
+        tabbedPane.add("Build", new BuildConfigurationTabComponent().getRootPanel());
+        tabbedPane.add("Code Coverage", new CodeCoverageTabComponent().getRootPanel());
     }
     public JPanel getRootPanel(){
         return rootPanel;
