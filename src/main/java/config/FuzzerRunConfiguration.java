@@ -12,6 +12,7 @@ import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.options.SettingsEditor;
+import com.intellij.openapi.options.SettingsEditorGroup;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.SimpleToolWindowPanel;
 import com.intellij.openapi.util.Disposer;
@@ -26,64 +27,31 @@ import utils.PathUtil;
 
 import java.nio.file.Path;
 
-public class FuzzerRunConfiguration extends RunConfigurationBase<FuzzerRunConfiguration.FuzzerRunConfigurationOptions>
-        implements PersistentStateComponent<FuzzerRunConfiguration.FuzzerRunConfigurationOptions> {
-    Project myProject;
+public class FuzzerRunConfiguration extends RunConfigurationBase<FuzzerRunConfigurationOptions> {
     protected FuzzerRunConfiguration(@NotNull Project project, @Nullable ConfigurationFactory factory,
                                      @Nullable String name) {
         super(project, factory, name);
-        myProject = project;
+    }
+
+    @NotNull
+    @Override
+    public FuzzerRunConfigurationOptions getOptions(){
+        return (FuzzerRunConfigurationOptions) super.getOptions();
     }
 
     @Override
     public @NotNull SettingsEditor<? extends RunConfiguration> getConfigurationEditor() {
-        return new FuzzerSettingsEditor();
+        SettingsEditorGroup<FuzzerRunConfiguration> tabbedEditorGroup = new SettingsEditorGroup<>();
+        tabbedEditorGroup.addEditor("Fuzzer", new FuzzerConfigurationTabComponent());
+        tabbedEditorGroup.addEditor("Build", new BuildConfigurationTabComponent());
+        tabbedEditorGroup.addEditor("Code Coverage", new CodeCoverageTabComponent());
+        return tabbedEditorGroup;
     }
 
     @Override
     public @Nullable RunProfileState getState(@NotNull Executor executor, @NotNull ExecutionEnvironment environment)
             throws ExecutionException {
-        TextConsoleBuilder consoleBuilder = TextConsoleBuilderFactory.getInstance().createBuilder(myProject);
-        //netService.configureConsole(consoleBuilder);
-        ConsoleView console = consoleBuilder.getConsole();
-        try {
-            String projectDir = "/home/dennis/CLionProjects/clion-plugin-test-project";
-            //OSProcessHandler chgDir = new OSProcessHandler(PathUtil.cmdToGeneralCommandLine("afl-fuzz -i ./input -o ./output ./cmake-build-afl-debug/test_program"));
-            OSProcessHandler processHandler = new OSProcessHandler(PathUtil.createFullPathCommandLine("afl-fuzz -i "+ projectDir + "/input -o "+projectDir+"/output2 "+projectDir+"/cmake-build-afl-debug/test_program", "/home/dennis/CLionProjects/clion-plugin-test-project"));
-            GeneralCommandLine cmd = PathUtil.createDefaultTtyCommandLine();
-            //OSProcessHandler processHandler1
-            //processHandler1.setExePath(PathUtil.getExecuteFileFullPath("afl-fuzz"));
-            console.attachToProcess(processHandler);
-            processHandler.startNotify();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        ApplicationManager.getApplication().invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                ActionGroup actionGroup = new DefaultActionGroup();
-                ActionToolbar toolbar = ActionManager.getInstance().createActionToolbar(ActionPlaces.UNKNOWN, actionGroup, false);
-
-                SimpleToolWindowPanel toolWindowPanel = new SimpleToolWindowPanel(false, true);
-                toolWindowPanel.setContent(console.getComponent());
-                toolWindowPanel.setToolbar(toolbar.getComponent());
-
-                ToolWindow toolWindow = ToolWindowManager.getInstance(myProject)
-                        .registerToolWindow("AFL", false, ToolWindowAnchor.BOTTOM, myProject, true);
-                Content content = ContentFactory.SERVICE.getInstance().createContent(toolWindowPanel, "", false);
-                Disposer.register(content, console);
-                toolWindow.getContentManager().addContent(content);
-                toolWindow.activate(new Runnable() {
-                    @Override
-                    public void run() {
-                    }
-                });
-            }
-        }, myProject.getDisposed());
         return null;
     }
-    public static final class FuzzerRunConfigurationOptions extends RunConfigurationOptions {
-        public FuzzerRunConfigurationOptions(){
-        }
-    }
+
 }

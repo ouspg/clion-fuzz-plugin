@@ -18,7 +18,7 @@
     <depends>org.jetbrains.plugins.terminal</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <configurationType implementation="config.FuzzerRunConfigurationType"/>
+        <configurationType implementation="config.FuzzerRunConfigurationType" id="fuzzer.run.config.type"/>
         <toolWindow id="Fuzzer Console" factoryClass="windows.FuzzerConsoleToolWindowFactory" anchor="bottom" secondary="false" />
         <toolWindow id="Crashes" factoryClass="windows.CrashesToolWindowFactory" anchor="right" secondary="false" />
 
