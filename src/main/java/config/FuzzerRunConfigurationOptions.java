@@ -6,7 +6,10 @@ import com.intellij.openapi.components.StoredProperty;
 import org.bouncycastle.util.Store;
 import org.jetbrains.annotations.Nullable;
 
-public class FuzzerRunConfigurationOptions extends RunConfigurationOptions {
+
+
+//if you want to add more parameters inherit this class and create your own fuzzer!!!
+public abstract class FuzzerRunConfigurationOptions extends RunConfigurationOptions {
     //Fuzzer Environment properties
     private final StoredProperty<String> fuzzerProgramArguments = string(null).provideDelegate(this, "fuzzerProgramArguments");
     private final StoredProperty<String> fuzzerWorkingDirectory = string(ProjectUtil.getBaseDir()).provideDelegate(this, "fuzzerWorkingDirectory");

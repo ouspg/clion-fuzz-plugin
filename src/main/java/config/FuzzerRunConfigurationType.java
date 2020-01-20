@@ -3,6 +3,7 @@ package config;
 import com.intellij.execution.configurations.ConfigurationType;
 import com.intellij.execution.configurations.ConfigurationTypeBase;
 import com.intellij.icons.AllIcons;
+import config.afl.AflRunConfigurationFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -11,13 +12,12 @@ import org.jetbrains.annotations.Nullable;
 //Initialisation of the configuration type is done through this class
 public final class FuzzerRunConfigurationType extends ConfigurationTypeBase implements ConfigurationType {
     private static final String ID = "fuzzer.run.config.type";
-    
+
+    //All the new fuzzers that are created and there configurations should be added here
     public FuzzerRunConfigurationType() {
         //TODO add an Icon here
         super(ID, "Fuzzer", "Description", AllIcons.General.Error);
-        addFactory(new FuzzerRunConfigurationFactory(this));
-        //Future fuzzers should be added here!!!
-        //addFactory(new AflFuzzerRunConfigurationFactory(this));
+        addFactory(new AflRunConfigurationFactory(this));
     }
 
     @Override

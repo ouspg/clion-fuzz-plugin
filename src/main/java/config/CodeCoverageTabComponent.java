@@ -7,6 +7,7 @@ import javax.swing.*;
 public class CodeCoverageTabComponent extends SettingsEditor<FuzzerRunConfiguration> {
     private JPanel rootPanel;
     private JCheckBox enableCodeCoverageForCheckBox;
+    private JPanel fuzzerSpecificPanel;
 
     public JPanel getRootPanel() {
         return rootPanel;

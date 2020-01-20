@@ -1,10 +1,8 @@
 package config;
 
-import com.intellij.execution.configuration.EnvironmentVariablesTextFieldWithBrowseButton;
+
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SettingsEditor;
-import com.intellij.openapi.ui.TextFieldWithBrowseButton;
-import com.intellij.ui.components.fields.ExpandableTextField;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -15,6 +13,7 @@ public class BuildConfigurationTabComponent extends SettingsEditor<FuzzerRunConf
     private JComboBox<String> comboBox2;
     private JComboBox<String> comboBox3;
     private EnvironmentSettingsUIComponent environmentSettingsPanel;
+    private JPanel fuzzerSpecificPanel;
 
     @Override
     protected void resetEditorFrom(@NotNull FuzzerRunConfiguration s) {
@@ -24,7 +23,7 @@ public class BuildConfigurationTabComponent extends SettingsEditor<FuzzerRunConf
     }
 
     @Override
-    protected void applyEditorTo(@NotNull FuzzerRunConfiguration s) throws ConfigurationException {
+    protected void applyEditorTo(@NotNull FuzzerRunConfiguration s) {
         s.getOptions().setBuildProgramArguments(environmentSettingsPanel.getProgramArgumentsField());
         s.getOptions().setBuildWorkingDirectory(environmentSettingsPanel.getWorkingDirectoryField());
         s.getOptions().setBuildEnvironmentVariables(environmentSettingsPanel.getEnvironmentVariablesField());
@@ -36,9 +35,10 @@ public class BuildConfigurationTabComponent extends SettingsEditor<FuzzerRunConf
     }
 
     public BuildConfigurationTabComponent(){
-        comboBox1.addItem("CMake");
-        comboBox2.addItem("test_program");
-        comboBox3.addItem("test_program");
+    }
+
+    public BuildConfigurationTabComponent(JPanel fuzzerSpecificBuildPanel){
+        this.fuzzerSpecificPanel = fuzzerSpecificBuildPanel;
     }
 
     private void createUIComponents() {
