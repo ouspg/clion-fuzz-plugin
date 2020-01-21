@@ -1,9 +1,8 @@
 package coverage
 
-import com.jetbrains.rd.util.string.print
-import net.zero9178.cov.data.CoverageGenerator
+import net.zero9178.cov.data.*
+import utils.ArrayMathUtils
 import java.io.File
-import java.util.function.Predicate
 
 class LcovCoverageGenerator (private val directory:String,
                              private val lcovFile : String) : CoverageGenerator {
@@ -36,7 +35,7 @@ class LcovCoverageGenerator (private val directory:String,
                              val covDetails = FunctionCoverageInfo(name = fn[1], line = fn[0].toInt(), hit = null)
                              item.functions.details.add(covDetails)}
                     "FNDA" -> {val fn = args.split(',')
-                        item.functions.details.forEach() {
+                        item.functions.details.forEach {
                             if((it.name == fn[1]) && (it.hit == null)){
                                 it.hit = fn[0].toInt()
                                 return@forEach
@@ -46,23 +45,23 @@ class LcovCoverageGenerator (private val directory:String,
                     }
                 }
                 if (line.indexOf("end_of_record") > -1) {
-                    item?.let { data.add(it) }
+                    item.let { data.add(it) }
                     item = createNewItem()
                 }
             }
             return data
         }
         private fun createNewItem() : Coverage{
-            return Coverage(CoverageInfoCollection<BranchCoverageInfo>(0, 0, ArrayList<BranchCoverageInfo>()),
-                    CoverageInfoCollection<FunctionCoverageInfo>(0, 0, ArrayList<FunctionCoverageInfo>()),
-                    CoverageInfoCollection<LineCoverageInfo>(0, 0, ArrayList<LineCoverageInfo>()),
+            return Coverage(CoverageInfoCollection(0, 0, ArrayList()),
+                    CoverageInfoCollection(0, 0, ArrayList()),
+                    CoverageInfoCollection(0, 0, ArrayList()),
                     "",
                     "")
         }
 
         @JvmStatic
         fun printCoverageHighLevelData(coverageCollection : ArrayList<Coverage>){
-            coverageCollection.forEach(){
+            coverageCollection.forEach {
                 println(it.functions.hit.toString() +  " " + it.functions.found.toString())
                 println(it.branches.hit.toString() +  " " + it.branches.found.toString())
                 println(it.lines.hit.toString() +  " " + it.lines.found.toString())
@@ -72,27 +71,61 @@ class LcovCoverageGenerator (private val directory:String,
         }
         @JvmStatic
         fun printCoverageLowLevelData(coverageCollection : ArrayList<Coverage>){
-            coverageCollection.forEach(){ it ->
-                it.branches.details.forEach(){it2 ->
+            coverageCollection.forEach {
+                it.branches.details.forEach { it2 ->
                     println(it2.block.toString() + " " + it2.branch.toString() + " " + it2.hit.toString() + " " + it2.line.toString())
                 }
-                it.functions.details.forEach(){it2 ->
+                it.functions.details.forEach { it2 ->
                     println(it2.name + " " + it2.hit.toString() + " " + it2.line.toString())
                 }
-                it.lines.details.forEach(){it2 ->
+                it.lines.details.forEach { it2 ->
                     println(it2.hit.toString() + " " + it2.line.toString())
                 }
             }
         }
+        @JvmStatic
+        fun getCoverageDataFromCoverage(coverage : ArrayList<Coverage>) : CoverageData? {
+            val covFileDataMap = HashMap<String, CoverageFileData>()
+            coverage.forEach { file ->
+                val allStartingLinesOfFunctions = file.getAllFunctionLines()
+                val covFunctionDataMap = HashMap<String, CoverageFunctionData>()
+                file.functions.details.forEach { function ->
+                    val nextGreaterNumberOfStartingLine = ArrayMathUtils.getNextGreaterNumber(function.line, allStartingLinesOfFunctions)
+                    val funcLineData = HashMap<Int, Long>()
+                    file.lines.details.forEach { line ->
+                        if(function.line != nextGreaterNumberOfStartingLine) {
+                            if ((line.line >= function.line) && (line.line < nextGreaterNumberOfStartingLine))
+                                funcLineData[line.line] = line.hit.toLong()
+                        }
+                        else if ((line.line >= function.line)){
+                            funcLineData[line.line] = line.hit.toLong()
+                        }
+                    }
+                    //Don't know where the function ends so just using Integer.MAX_VALUE!!!
+                    val covFunctionData = CoverageFunctionData(function.line, Integer.MAX_VALUE, function.name, FunctionLineData(funcLineData), emptyList())
+                    covFunctionDataMap[function.name] = covFunctionData
+                }
+                covFileDataMap[file.file] = CoverageFileData(file.file, covFunctionDataMap)
+            }
+            return CoverageData(covFileDataMap, hasBranchCoverage = false, containsExternalSources = false)
+        }
     }
+}
 
-    data class FunctionCoverageInfo(var hit: Int?, val line: Int, val name: String)
-    data class BranchCoverageInfo(val block: Int, val branch: Int, val line: Int, val hit: Int)
-    data class LineCoverageInfo(val hit: Int, val line: Int)
-    data class CoverageInfoCollection<T>(var found: Int, var hit: Int, var details: ArrayList<T>)
-    data class Coverage(val branches: CoverageInfoCollection<BranchCoverageInfo>,
-                                val functions: CoverageInfoCollection<FunctionCoverageInfo>,
-                                val lines: CoverageInfoCollection<LineCoverageInfo>,
-                                var title: String,
-                                var file: String)
+data class FunctionCoverageInfo(var hit: Int?, val line: Int, val name: String)
+data class BranchCoverageInfo(val block: Int, val branch: Int, val line: Int, val hit: Int)
+data class LineCoverageInfo(val hit: Int, val line: Int)
+data class CoverageInfoCollection<T>(var found: Int, var hit: Int, var details: ArrayList<T>)
+data class Coverage(val branches: CoverageInfoCollection<BranchCoverageInfo>,
+                            val functions: CoverageInfoCollection<FunctionCoverageInfo>,
+                            val lines: CoverageInfoCollection<LineCoverageInfo>,
+                            var title: String,
+                            var file: String) {
+    fun getAllFunctionLines() : ArrayList<Int>{
+        val arr = ArrayList<Int>()
+        functions.details.forEach {
+            arr.add(it.line)
+        }
+        return arr
+    }
 }
