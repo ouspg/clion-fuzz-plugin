@@ -1,5 +1,9 @@
 package coverage
 
+import net.zero9178.cov.data.CoverageData
+import net.zero9178.cov.data.CoverageFileData
+import net.zero9178.cov.data.CoverageFunctionData
+import net.zero9178.cov.data.FunctionLineData
 import utils.ArrayMathUtils
 import java.io.File
 

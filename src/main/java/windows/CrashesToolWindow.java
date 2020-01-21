@@ -1,12 +1,12 @@
 package windows;
 
+import a.f.a.L;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import coverage.Coverage;
-import coverage.CoverageData;
-import coverage.FuzzCoverageHighlighter;
 import coverage.LcovCoverageGenerator;
-
+import net.zero9178.cov.editor.CoverageHighlighter;
+import net.zero9178.cov.data.CoverageData;
 import java.util.*;
 
 import javax.swing.*;
@@ -52,6 +52,6 @@ class RefreshCoverageTask extends TimerTask {
         ArrayList<Coverage> coverage = LcovCoverageGenerator.parseLcovInfo("/home/dennis/CLionProjects/clion-plugin-test-project/output/cov/lcov/trace.lcov_info_final");
         CoverageData coverageData = LcovCoverageGenerator.getCoverageDataFromCoverage(coverage);
         System.out.println("Its working fine till here!!!");
-        FuzzCoverageHighlighter.Companion.getInstance(project).setCoverageData(coverageData);
+        CoverageHighlighter.Companion.getInstance(project).setCoverageData(coverageData);
     }
 }

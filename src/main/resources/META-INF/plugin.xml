@@ -14,7 +14,7 @@
     <depends>com.intellij.modules.cidr.lang</depends>
     <depends>com.intellij.modules.cidr.debugger</depends>
     <depends>com.intellij.modules.clion</depends>
-
+    <depends>com.zero9178</depends>
 
     <depends>org.jetbrains.plugins.terminal</depends>
 
@@ -28,7 +28,6 @@
         <projectService serviceImplementation="settings.BuildSettingsConfig"/>
         <projectService serviceImplementation="settings.AflSettingsConfig"/>
         <projectService serviceImplementation="settings.CoverageSettingsConfig"/>
-        <projectService serviceImplementation="coverage.FuzzCoverageHighlighter"/>
 
         <projectConfigurable groupId="tools" groupWeight="110" id="settings.dialog.fuzzer.plugin"
                              instance="settings.PluginSettingsConfigurable"/>
