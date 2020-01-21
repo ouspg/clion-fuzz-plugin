@@ -1,17 +1,20 @@
 package coverage
 
-import net.zero9178.cov.data.*
 import utils.ArrayMathUtils
 import java.io.File
 
 class LcovCoverageGenerator (private val directory:String,
-                             private val lcovFile : String) : CoverageGenerator {
+                             private val lcovFile : String) {
 
     companion object {
         @JvmStatic
         fun parseLcovInfo(filePath: String) : ArrayList<Coverage> {
             val data: ArrayList<Coverage> = ArrayList()
             val file = File(filePath)
+            if(!file.exists()){
+                println("File doesn't exists!!!")
+                return data;
+            }
             var item: Coverage = createNewItem()
             for (rawLine in file.readLines()) {
                 val line = rawLine.trim()

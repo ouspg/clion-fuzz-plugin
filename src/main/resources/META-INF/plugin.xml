@@ -18,6 +18,7 @@
 
     <depends>org.jetbrains.plugins.terminal</depends>
 
+    <!-- Application-level listeners -->
     <extensions defaultExtensionNs="com.intellij">
         <configurationType implementation="config.FuzzerRunConfigurationType" id="fuzzer.run.config.type"/>
         <toolWindow id="Fuzzer Console" factoryClass="windows.FuzzerConsoleToolWindowFactory" anchor="bottom" secondary="false" />
@@ -27,6 +28,7 @@
         <projectService serviceImplementation="settings.BuildSettingsConfig"/>
         <projectService serviceImplementation="settings.AflSettingsConfig"/>
         <projectService serviceImplementation="settings.CoverageSettingsConfig"/>
+        <projectService serviceImplementation="coverage.FuzzCoverageHighlighter"/>
 
         <projectConfigurable groupId="tools" groupWeight="110" id="settings.dialog.fuzzer.plugin"
                              instance="settings.PluginSettingsConfigurable"/>
@@ -41,4 +43,5 @@
     <actions>
         <!-- Add your actions here -->
     </actions>
+    <idea-version since-build="CL-193"/>
 </idea-plugin>
