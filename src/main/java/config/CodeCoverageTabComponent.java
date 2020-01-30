@@ -1,33 +1,36 @@
 package config;
 
-import com.intellij.openapi.options.SettingsEditor;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-public class CodeCoverageTabComponent extends SettingsEditor<FuzzerRunConfiguration> {
+public abstract class CodeCoverageTabComponent<Settings extends FuzzerRunConfiguration> extends FuzzerConfigTabComponent<Settings> {
     private JPanel rootPanel;
     private JCheckBox enableCodeCoverageForCheckBox;
     private JPanel fuzzerSpecificPanel;
 
+    public CodeCoverageTabComponent(){
+        createEditor(fuzzerSpecificPanel, rootPanel);
+    }
     public JPanel getRootPanel() {
         return rootPanel;
     }
 
 
     @Override
-    protected void resetEditorFrom(@NotNull FuzzerRunConfiguration s) {
+    public void resetEditorFrom(@NotNull Settings s) {
         if(s.getOptions().getCodeCoverageEnabled() != null) {
             enableCodeCoverageForCheckBox.setSelected(s.getOptions().getCodeCoverageEnabled());
         }
     }
 
     @Override
-    protected void applyEditorTo(@NotNull FuzzerRunConfiguration s) {
+    public void applyEditorTo(@NotNull Settings s) {
         s.getOptions().setCodeCoverageEnabled(enableCodeCoverageForCheckBox.isSelected());
     }
 
     @Override
-    protected @NotNull JComponent createEditor() {
+    @NotNull
+    public JComponent createEditor() {
         return rootPanel;
     }
 }

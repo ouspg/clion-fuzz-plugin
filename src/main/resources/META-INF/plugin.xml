@@ -39,6 +39,12 @@
         <projectConfigurable groupId="settings.dialog.fuzzer.plugin" groupWeight="110" id="settings.dialog.fuzzer.fuzzer"
                              instance="settings.CoverageSettingsConfigurable"/>
     </extensions>
+    <project-components>
+        <component>
+            <implementation-class>views.FuzzerConsoleView</implementation-class>
+        </component>
+
+    </project-components>
     <actions>
         <!-- Add your actions here -->
     </actions>

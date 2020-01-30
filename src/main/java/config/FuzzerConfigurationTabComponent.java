@@ -1,17 +1,16 @@
 package config;
 
-import com.intellij.openapi.options.SettingsEditor;
-import com.intellij.openapi.options.SettingsEditorGroup;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 
-public class FuzzerConfigurationTabComponent<Settings extends FuzzerRunConfiguration> extends SettingsEditorGroup<Settings> {
+public abstract class FuzzerConfigurationTabComponent<Settings extends FuzzerRunConfiguration> extends FuzzerConfigTabComponent<Settings> {
     private JPanel rootPanel;
-    private SettingsEditor<Settings> fuzzerSpecificSettingsEditor;
     private JPanel fuzzerSpecificPanel;
     private EnvironmentSettingsUIComponent environmentSettingsPanel;
-
+    public FuzzerConfigurationTabComponent(){
+        createEditor(fuzzerSpecificPanel, rootPanel);
+    }
 
     @Override
     public void resetEditorFrom(@NotNull Settings s) {
@@ -25,11 +24,6 @@ public class FuzzerConfigurationTabComponent<Settings extends FuzzerRunConfigura
         s.getOptions().setFuzzerProgramArguments(environmentSettingsPanel.getProgramArgumentsField());
         s.getOptions().setFuzzerWorkingDirectory(environmentSettingsPanel.getWorkingDirectoryField());
         s.getOptions().setFuzzerEnvironmentVariables(environmentSettingsPanel.getEnvironmentVariablesField());
-    }
-
-    @Override
-    public  @NotNull JComponent createEditor() {
-        return rootPanel;
     }
 
     private void createUIComponents() {

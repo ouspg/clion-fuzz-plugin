@@ -24,7 +24,7 @@ dependencies {
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
     version 'CL-2019.3'
-    plugins = ['terminal', 'com.zero9178:2019.3.1', 'name.kropp.intellij.makefile:1.7.0']
+    plugins = ['terminal', 'com.zero9178:2019.3.1', 'name.kropp.intellij.makefile:1.7.0', 'sh']
 }
 
 patchPluginXml {

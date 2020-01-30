@@ -9,7 +9,6 @@ import java.io.File
 
 class LcovCoverageGenerator (private val directory:String,
                              private val lcovFile : String) {
-
     companion object {
         @JvmStatic
         fun parseLcovInfo(filePath: String) : ArrayList<Coverage> {
