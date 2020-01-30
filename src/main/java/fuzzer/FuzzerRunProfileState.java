@@ -34,6 +34,7 @@ import java.util.Map;
  */
 public class FuzzerRunProfileState implements RunProfileState {
     ExecutionEnvironment executionEnvironment;
+
     public FuzzerRunProfileState(ExecutionEnvironment executionEnvironment){
         this.executionEnvironment = executionEnvironment;
     }
