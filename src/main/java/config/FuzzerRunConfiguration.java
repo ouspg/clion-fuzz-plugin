@@ -3,9 +3,9 @@ package config;
 import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.*;
 import com.intellij.execution.runners.ExecutionEnvironment;
-import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.options.SettingsEditorGroup;
 import com.intellij.openapi.project.Project;
+import config.afl.AflRunConfiguration;
 import fuzzer.FuzzerRunProfileState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,9 +15,6 @@ public abstract class FuzzerRunConfiguration extends RunConfigurationBase<Fuzzer
                                      @Nullable String name) {
         super(project, factory, name);
     }
-
-    //Extra tabs can be added through adding editors to the variable after inheriting this class
-    protected SettingsEditorGroup<? extends FuzzerRunConfiguration> tabbedEditorGroup;
 
     @NotNull
     @Override

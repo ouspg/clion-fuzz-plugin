@@ -9,6 +9,6 @@ import config.FuzzerConfigurationTabComponent;
 import config.FuzzerRunConfiguration;
 import org.jetbrains.annotations.NotNull;
 
-public class AflBuildConfigurationTabComponent<Settings extends FuzzerRunConfiguration>  extends BuildConfigurationTabComponent<Settings> {
+public class AflBuildConfigurationTabComponent<Settings extends AflRunConfiguration>  extends BuildConfigurationTabComponent<Settings> {
 
 }
