@@ -18,6 +18,8 @@ import com.intellij.openapi.util.SystemInfo;
 import com.intellij.sh.run.ShTerminalRunner;
 import com.intellij.terminal.ProcessHandlerTtyConnector;
 import com.intellij.terminal.TerminalExecutionConsole;
+import config.FuzzerConfigurationTabComponent;
+import config.FuzzerRunConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.plugins.terminal.ShellTerminalWidget;
@@ -63,6 +65,7 @@ public class FuzzerRunProfileState implements RunProfileState {
         processHandler.startNotify();
         executionConsole.attachToProcess(processHandler);
         FuzzerConsoleView.getInstance(executionEnvironment.getProject()).showExecutionResult(new DefaultExecutionResult(executionConsole, processHandler));
+
         return null;
     }
 }

@@ -91,11 +91,11 @@ public class FuzzerConsoleView extends TerminalView implements FocusListener, Pr
         ContentManager contentManager = fuzzerToolWindow.getContentManager();
         SimpleToolWindowPanel panel = new SimpleToolWindowPanel(false, true);
         panel.setContent(executionResult.getExecutionConsole().getComponent());
-        //final Content content = ContentFactory.SERVICE.getInstance().createContent(panel, "Tab 1", false);
-        //content.setShouldDisposeContent(true);
-        //content.setDisposer(executionResult.getExecutionConsole());
-        //content.setCloseable(true);
-        //contentManager.addContent(content);
+        final Content content = ContentFactory.SERVICE.getInstance().createContent(panel, "Tab 1", false);
+        content.setShouldDisposeContent(true);
+        content.setDisposer(executionResult.getExecutionConsole());
+        content.setCloseable(true);
+        contentManager.addContent(content);
     }
 }
 

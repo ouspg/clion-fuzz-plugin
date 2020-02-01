@@ -21,7 +21,7 @@
     <!-- Application-level listeners -->
     <extensions defaultExtensionNs="com.intellij">
         <configurationType implementation="config.FuzzerRunConfigurationType" id="fuzzer.run.config.type"/>
-        <toolWindow id="Fuzzer Console" factoryClass="windows.FuzzerConsoleToolWindowFactory" anchor="bottom" secondary="false" />
+        <toolWindow id="Fuzzer Console" factoryClass="windows.FuzzerConsoleToolWindowFactory" anchor="bottom" secondary="false" canCloseContents="true"/>
         <toolWindow id="Crashes" factoryClass="windows.CrashesToolWindowFactory" anchor="right" secondary="false" />
 
         <projectService serviceImplementation="settings.PluginSettingsConfig"/>
