@@ -65,7 +65,6 @@ public class FuzzerRunProfileState implements RunProfileState {
         processHandler.startNotify();
         executionConsole.attachToProcess(processHandler);
         FuzzerConsoleView.getInstance(executionEnvironment.getProject()).showExecutionResult(new DefaultExecutionResult(executionConsole, processHandler));
-
         return null;
     }
 }

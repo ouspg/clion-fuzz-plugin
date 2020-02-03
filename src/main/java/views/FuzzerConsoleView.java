@@ -10,6 +10,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.SimpleToolWindowPanel;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.openapi.wm.ToolWindowAnchor;
+import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.openapi.wm.ex.ToolWindowManagerListener;
 import com.intellij.openapi.wm.impl.ToolWindowImpl;
 import com.intellij.ui.content.Content;
@@ -45,6 +47,8 @@ public class FuzzerConsoleView extends TerminalView implements FocusListener, Pr
     public FuzzerConsoleView(Project project) {
         super(project);
         this.project = project;
+        System.out.println("Initiating tool window!!!");
+        ToolWindowManager.getInstance(project).registerToolWindow("Fuzzer console", true, ToolWindowAnchor.BOTTOM);
     }
 
 
@@ -85,9 +89,10 @@ public class FuzzerConsoleView extends TerminalView implements FocusListener, Pr
     }
 
     public void showExecutionResult(DefaultExecutionResult executionResult) {
-//        if (fuzzerToolWindow == null){
-//            FuzzerConsoleView.getInstance(project).init(fuzzerToolWindow);
-//        }
+        if (fuzzerToolWindow == null){
+            FuzzerConsoleView.getInstance(project).init(fuzzerToolWindow);
+            fuzzerToolWindow = ToolWindowManager.getInstance(project).getToolWindow("windows.FuzzerConsoleToolWindowFactory");
+        }
         ContentManager contentManager = fuzzerToolWindow.getContentManager();
         SimpleToolWindowPanel panel = new SimpleToolWindowPanel(false, true);
         panel.setContent(executionResult.getExecutionConsole().getComponent());
@@ -98,4 +103,3 @@ public class FuzzerConsoleView extends TerminalView implements FocusListener, Pr
         contentManager.addContent(content);
     }
 }
-

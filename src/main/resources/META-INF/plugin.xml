@@ -43,7 +43,6 @@
         <component>
             <implementation-class>views.FuzzerConsoleView</implementation-class>
         </component>
-
     </project-components>
     <actions>
         <!-- Add your actions here -->

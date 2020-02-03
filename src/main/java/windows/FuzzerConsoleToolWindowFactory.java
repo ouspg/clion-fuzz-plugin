@@ -9,6 +9,7 @@ import views.FuzzerConsoleView;
 
 public class FuzzerConsoleToolWindowFactory implements ToolWindowFactory {
     public String TOOL_WINDOW_ID = "Fuzzer Console";
+
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         FuzzerConsoleView.getInstance(project).init(toolWindow);
