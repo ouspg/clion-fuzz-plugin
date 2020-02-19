@@ -23,7 +23,7 @@
         <configurationType implementation="config.FuzzerRunConfigurationType" id="fuzzer.run.config.type"/>
         <toolWindow id="Fuzzer Console" factoryClass="windows.FuzzerConsoleToolWindowFactory" anchor="bottom" secondary="false" canCloseContents="true"/>
         <toolWindow id="Crashes" factoryClass="windows.CrashesToolWindowFactory" anchor="right" secondary="false" />
-
+        <projectService serviceImplementation="build.CMakeBuildService"/>
         <projectService serviceImplementation="settings.PluginSettingsConfig"/>
         <projectService serviceImplementation="settings.BuildSettingsConfig"/>
         <projectService serviceImplementation="settings.AflSettingsConfig"/>
@@ -43,9 +43,12 @@
         <component>
             <implementation-class>views.FuzzerConsoleView</implementation-class>
         </component>
+        <component>
+            <implementation-class>TestComponent</implementation-class>
+        </component>
     </project-components>
     <actions>
         <!-- Add your actions here -->
     </actions>
-    <idea-version since-build="CL-193"/>
+    <idea-version since-build="CL-193.2252"/>
 </idea-plugin>

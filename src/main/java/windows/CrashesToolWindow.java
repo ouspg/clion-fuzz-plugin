@@ -1,13 +1,11 @@
 package windows;
 
-import a.f.a.L;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import coverage.Coverage;
 import coverage.LcovCoverageGenerator;
 import net.zero9178.cov.editor.CoverageHighlighter;
 import net.zero9178.cov.data.CoverageData;
-import java.util.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

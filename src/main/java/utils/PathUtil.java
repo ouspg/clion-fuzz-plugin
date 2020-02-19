@@ -83,8 +83,6 @@ public class PathUtil {
             }
         }
 
-//        Messages.showWarningDialog(project, "找不到有效的React Native目录, 命令将停止执行.\n目录" +
-//                inputDir + "及其上级目录中找不到有效的package.json文件.", "警告");
 
         return null;
     }
@@ -111,10 +109,7 @@ public class PathUtil {
 
                 if (!exeName.endsWith(".cmd")) {
                     // Fix bug: npm, react-native can't be run Windows: https://github.com/beansoftapp/react-native-console/issues/6
-                /*
-                Unable to run the commandline:Cannot run program "D:\nodejs\npm" (in directory "D:\Project\wxsh"):
-                CreateProcess error=193, %1 不是有效的 Win32 应用程序
-                 */
+
                     fullPath = getExecuteFullPathSingle(exeName + ".cmd");
                     if (fullPath != null) {
                         return fullPath;
@@ -123,11 +118,7 @@ public class PathUtil {
 
                 if (!exeName.endsWith(".bat")) {
                     // Fix bug: gradlew can't be run Windows:
-                /*
-                Unable to run the commandline:Cannot run program ".\gradlew.cmd"
-                 (in directory "D:\Project\wxsh\android"): CreateProcess error=2, 系统找不到指定的文件。
-                 there is only a gradlew.bat file, no gradlew.cmd file
-                 */
+
                     fullPath = getExecuteFullPathSingle(exeName + ".bat");
                     if (fullPath != null) {
                         return fullPath;
